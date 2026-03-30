@@ -18,7 +18,7 @@
           </p>
 
           <div class="hero-buttons" style="display: flex; gap: 20px; margin-top: 30px; flex-wrap: wrap;">
-            <button class="cta-button" id="tickets">GET TICKETS</button>
+            <NuxtLink to="/ticket" class="cta-button">GET TICKETS</NuxtLink>
             <button class="cta-button" style="background-color: var(--yellow-matsuri); color: var(--black-outline);">VIEW GUESTS</button>
           </div>
         </div>

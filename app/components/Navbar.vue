@@ -5,8 +5,6 @@
         <img src="/logo-aratu.png" alt="Aratsu Logo">
       </NuxtLink>
     </div>
-    
-    <!-- Desktop Links -->
     <div class="nav-links desktop-only">
       <NuxtLink to="/" class="nav-link">HOME</NuxtLink>
       <NuxtLink to="/event" class="nav-link">EVENT</NuxtLink>
@@ -15,9 +13,7 @@
     </div>
 
     <div class="nav-actions">
-       <a href="#tickets" class="nav-cta desktop-only">GET TICKETS</a>
-       
-       <!-- Hamburger Button (Mobile Only) -->
+       <NuxtLink to="/ticket" class="nav-cta desktop-only">GET TICKETS</NuxtLink>
        <button 
          v-if="isMobile"
          :class="['hamburger-btn', 'mobile-only', { 'is-active': isSidebarOpen }]" 
@@ -68,7 +64,7 @@
           </div>
 
           <div class="sidebar-footer">
-            <a href="#tickets" class="nav-cta sidebar-cta-full" @click="isSidebarOpen = false">GET TICKETS</a>
+            <NuxtLink to="/ticket" class="nav-cta sidebar-cta-full" @click="isSidebarOpen = false">GET TICKETS</NuxtLink>
             <div class="sidebar-socials">
               <p>FOLLOW US</p>
               <div class="social-icons">
