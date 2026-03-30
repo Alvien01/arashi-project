@@ -435,6 +435,67 @@ body {
   margin-top: 100px;
 }
 
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.social-link {
+  color: white;
+  text-decoration: none;
+  font-family: 'Bangers', cursive;
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 35px;
+  border-radius: 50px;
+  border: 3px solid var(--black-outline);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.social-link svg {
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+/* Modern Instagram Style */
+.social-link.ig-link {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  box-shadow: 6px 6px 0 var(--black-outline);
+}
+
+.social-link.ig-link:hover {
+  transform: translateY(-5px) scale(1.05) rotate(-2deg);
+  box-shadow: 8px 8px 0px var(--yellow-matsuri);
+}
+
+.social-link.ig-link:hover svg {
+  transform: scale(1.2) rotate(10deg);
+}
+
+/* Modern TikTok Style */
+.social-link.tiktok-link {
+  background: #000000;
+  box-shadow: 6px 6px 0 var(--black-outline);
+}
+
+.social-link.tiktok-link:hover {
+  transform: translateY(-5px) scale(1.05) rotate(2deg);
+  box-shadow: 8px 8px 0px #25F4EE; /* TikTok Cyan */
+  color: #fff;
+  text-shadow: 2px 2px 0px #FE2C55; /* TikTok Red */
+}
+
+.social-link.tiktok-link:hover svg {
+  filter: drop-shadow(2px 2px 0px #FE2C55) drop-shadow(-2px -2px 0px #25F4EE);
+  transform: scale(1.15);
+}
+
 .mascot-hero {
   max-width: 420px;
   animation: float 4s ease-in-out infinite;
