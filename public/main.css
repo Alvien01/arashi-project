@@ -156,13 +156,15 @@ body {
 .nav-link {
   text-decoration: none;
   font-family: 'Bangers', cursive;
-  color: var(--blue-aratsu);
-  font-size: 1.4rem;
+  color: var(--black-outline);
+  font-weight: 300; /* Membuat warna hitamnya lebih 'bold' / tebal */
+  font-size: 1.6rem;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   padding: 5px 15px;
   position: relative;
-  -webkit-text-stroke: 0.5px var(--black-outline);
-  letter-spacing: 1px;
+  -webkit-text-stroke: 1.5px var(--yellow-matsuri);
+  paint-order: stroke fill;
+  letter-spacing: 2px;
 }
 
 .nav-link::after {
@@ -234,7 +236,9 @@ body {
   .nav-logo img {
     height: 55px;
   }
-  .mascot-hero {
+  .mascot-hero,
+  .minami-bottom-right,
+  .minami-bottom-left {
     display: none !important;
   }
   .content-wrapper {
@@ -386,7 +390,7 @@ body {
   position: absolute;
   width: 100px;
   height: auto;
-  z-index: 5;
+  z-index: 10;
   pointer-events: none;
   filter: drop-shadow(2px 2px 0 var(--black-outline));
   transition: transform 0.3s ease;
