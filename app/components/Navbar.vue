@@ -10,9 +10,8 @@
     <div class="nav-links desktop-only">
       <NuxtLink to="/" class="nav-link">HOME</NuxtLink>
       <NuxtLink to="/event" class="nav-link">EVENT</NuxtLink>
-      <NuxtLink to="/#schedule" class="nav-link">SCHEDULE</NuxtLink>
-      <NuxtLink to="/#about" class="nav-link">ABOUT</NuxtLink>
-      <NuxtLink to="/#merch" class="nav-link">MERCH</NuxtLink>
+      <NuxtLink to="/about" class="nav-link">ABOUT</NuxtLink>
+      <NuxtLink to="/merch" class="nav-link">MERCH</NuxtLink>
     </div>
 
     <div class="nav-actions">
@@ -20,6 +19,7 @@
        
        <!-- Hamburger Button (Mobile Only) -->
        <button 
+         v-if="isMobile"
          :class="['hamburger-btn', 'mobile-only', { 'is-active': isSidebarOpen }]" 
          @click="isSidebarOpen = !isSidebarOpen" 
          aria-label="Toggle Menu"
@@ -32,12 +32,12 @@
 
     <!-- Mobile Sidebar Overlay -->
     <Transition name="fade">
-      <div v-if="isSidebarOpen" class="sidebar-overlay" @click="isSidebarOpen = false"></div>
+      <div v-if="isSidebarOpen && isMobile" class="sidebar-overlay" @click="isSidebarOpen = false"></div>
     </Transition>
 
     <!-- Mobile Sidebar Content -->
     <Transition name="slide">
-      <div v-if="isSidebarOpen" class="nav-sidebar">
+      <div v-if="isSidebarOpen && isMobile" class="nav-sidebar">
         <div class="sidebar-inner">
           <div class="sidebar-header">
             <img src="/logo-aratu.png" alt="Aratsu Logo" class="sidebar-logo">
@@ -59,10 +59,10 @@
             <NuxtLink to="/#schedule" class="sidebar-link" @click="isSidebarOpen = false">
               <span class="link-text">SCHEDULE</span>
             </NuxtLink>
-            <NuxtLink to="/#about" class="sidebar-link" @click="isSidebarOpen = false">
+            <NuxtLink to="/about" class="sidebar-link" @click="isSidebarOpen = false">
               <span class="link-text">ABOUT</span>
             </NuxtLink>
-            <NuxtLink to="/#merch" class="sidebar-link" @click="isSidebarOpen = false">
+            <NuxtLink to="/merch" class="sidebar-link" @click="isSidebarOpen = false">
               <span class="link-text">MERCH</span>
             </NuxtLink>
           </div>
@@ -84,14 +84,31 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted, onUnmounted } from 'vue'
 
 const isSidebarOpen = ref(false)
+const isMobile = ref(false)
+
+const checkMobile = () => {
+  if (process.client) {
+    isMobile.value = window.innerWidth <= 768
+    if (!isMobile.value) isSidebarOpen.value = false
+  }
+}
+
+onMounted(() => {
+  checkMobile()
+  window.addEventListener('resize', checkMobile)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', checkMobile)
+})
 
 // Prevent scroll when sidebar is open
 watch(isSidebarOpen, (val) => {
   if (process.client) {
-    document.body.style.overflow = val ? 'hidden' : ''
+    document.body.style.overflow = (val && isMobile.value) ? 'hidden' : ''
   }
 })
 </script>

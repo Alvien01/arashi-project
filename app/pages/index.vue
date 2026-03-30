@@ -33,7 +33,7 @@
       <img src="/minami-3.png" alt="Minami 3 Mascot" class="minami-bottom-right">
       <img src="/minami-4.png" alt="Minami 4 Mascot" class="minami-bottom-left">
     </div>
-    <AboutSection />
+
     <section class="section" id="guests">
       <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 50px; font-size: 3rem;">
         <span class="title-aratsu">SPECIAL</span>
