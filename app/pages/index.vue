@@ -50,13 +50,17 @@
     <section class="section" id="guests">
       <h2 class="section-title">SPECIAL GUESTS</h2>
       <div class="card-grid">
-        <div class="guest-card" v-for="i in 3" :key="i">
-          <div style="width: 100%; height: 250px; background: #eee; border-radius: 10px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; border: 2px solid var(--black-outline);">
-            <span style="font-family: 'Bangers'; color: #ccc; font-size: 2rem;">GUEST IMAGE</span>
+        <div class="guest-card" v-for="(guest, index) in guestsList" :key="index">
+          <div :class="guest.images.length > 1 ? 'guest-image-split' : 'guest-image-single'">
+            <img :src="guest.images[0]" :alt="guest.name.split(' & ')[0]">
+            <img v-if="guest.images.length > 1" :src="guest.images[1]" :alt="guest.name.split(' & ')[1]">
           </div>
-          <h3 class="guest-name">VIRTUAL IDOL ALPHA</h3>
-          <p style="text-transform: uppercase; font-size: 0.8rem; font-weight: bold; color: #777;">International Performer</p>
+          <h3 class="guest-name">{{ guest.name }}</h3>
+          <p style="text-transform: uppercase; font-size: 0.8rem; font-weight: bold; color: #777;">{{ guest.role }}</p>
         </div>
+      </div>
+      <div style="text-align: center; margin-top: 50px;">
+        <h3 style="font-family: 'Bangers', cursive; font-size: 3rem; color: var(--yellow-matsuri); -webkit-text-stroke: 1.5px var(--black-outline); text-shadow: 4px 4px 0 var(--black-outline); letter-spacing: 2px; margin: 0;">AND MANY MORE...</h3>
       </div>
     </section>
     <section class="section" style="background: var(--blue-aratsu); border-top: 5px solid var(--black-outline); border-bottom: 5px solid var(--black-outline); max-width: 100%; color: white;">
@@ -64,20 +68,33 @@
         <div style="flex: 1;">
           <h2 class="section-title" style="color: white; text-align: left; -webkit-text-stroke: 1px var(--black-outline);">WHAT'S ON?</h2>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-            <div style="background: white; color: black; padding: 20px; border: 3px solid var(--black-outline); border-radius: 10px;">
+            <div style="background: white; color: black; padding: 20px; border: 3px solid var(--black-outline); border-radius: 10px; position: relative; overflow: hidden;">
               <h4 style="font-family: 'Bangers'; font-size: 1.5rem;">COSPLAY COMPETITION & COSWALK</h4>
-              <p>Show your craft on the big stage!</p>
+              <p>Show your craft performance on the big stage!</p>
+              <img src="/CHIBI COSWALK.png" alt="Chibi Coswalk" class="chibi-icon chibi-bl">
             </div>
-            <div style="background: white; color: black; padding: 20px; border: 3px solid var(--black-outline); border-radius: 10px;">
-              <h4 style="font-family: 'Bangers'; font-size: 1.5rem;">PERFORMER</h4>
-              <p>Meet and support local creators.</p>
+            <div style="background: white; color: black; padding: 20px; border: 3px solid var(--black-outline); border-radius: 10px; position: relative; overflow: hidden;">
+              <h4 style="font-family: 'Bangers'; font-size: 1.5rem;">IDOL & BAND PERFORMER</h4>
+              <p>Meet our special idol & band performer.</p>
+              <img src="/CHIBI MEDPAR.png" alt="Chibi Idol" class="chibi-icon chibi-tr">
+            </div>
+            <div style="background: white; color: black; padding: 20px; border: 3px solid var(--black-outline); border-radius: 10px; position: relative; overflow: hidden;">
+              <h4 style="font-family: 'Bangers'; font-size: 1.5rem;">J-SONG COMPETITION</h4>
+              <p>Show your talent on J-Song Competition!</p>
+              <img src="/CHIBI JSONG.png" alt="Chibi Jsong" class="chibi-icon chibi-tl">
+            </div>
+            <div style="background: white; color: black; padding: 20px; border: 3px solid var(--black-outline); border-radius: 10px; position: relative; overflow: hidden;">
+              <h4 style="font-family: 'Bangers'; font-size: 1.5rem;">COMUNITY & MERCH BOOTH</h4>
+              <p>Meet our special community & many merch booth.</p>
+              <img src="/CHIBI KOMUN.png" alt="Chibi Booth" class="chibi-icon chibi-br">
             </div>
           </div>
         </div>
         <div style="flex: 1; text-align: center;">
-           <div style="background: var(--yellow-matsuri); border: 4px solid var(--black-outline); padding: 50px; border-radius: 20px; transform: rotate(2deg); color: black;">
+           <div style="background: var(--yellow-matsuri); border: 4px solid var(--black-outline); padding: 50px; border-radius: 20px; transform: rotate(2deg); color: black; position: relative;">
               <h3 style="font-family: 'Bangers'; font-size: 3rem;">JOIN THE FUN!</h3>
               <p style="font-weight: bold;">Tickets starting from Rp 25.000</p>
+              <img src="/minami-2.png" alt="Minami Fun" class="minami-fun">
            </div>
         </div>
       </div>
@@ -95,6 +112,11 @@
 </template>
 
 <script setup>
+const guestsList = [
+  { name: 'HIROTO & LITA', role: 'Judge Coswalk Competition', images: ['/image.png'] },
+  { name: 'ARDHIAN & SASHMIZU', role: 'Judge Cosplay Competition', images: ['/image (1).png'] },
+  { name: 'VERONYAN & PIIKAPI', role: 'Judge J-song', images: ['/image (2).png'] }
+]
 </script>
 
 <style scoped>
