@@ -6,12 +6,12 @@
       <Navbar />
       <div class="content-wrapper" style="display: flex; align-items: center; gap: 50px; flex-wrap: wrap; justify-content: center;">
         <div class="hero-left-content" style="flex: 1; min-width: 300px; text-align: left;">
-          <div class="logo-main">
+          <h1 class="logo-main">
             <span class="title-aratsu">ARATU</span>
             <span class="title-no">NO</span>
             <span class="title-matsuri">MATSURI</span>
             <span class="title-vol">VOL.3</span>
-          </div>
+          </h1>
           
           <p style="font-size: 1.5rem; margin-top: 30px; font-weight: 600; color: #333; max-width: 500px; line-height: 1.4;">
             The biggest pop culture celebration in Tulungagung is back! Immerse yourself in a world of anime, games, and music.
@@ -23,22 +23,26 @@
           </div>
         </div>
 
-        <div style="flex: 1; min-width: 300px; display: flex; justify-content: center;">
+        <div style="flex: 1; min-width: 300px; display: flex; justify-content: center; position: relative;">
+          <img src="/logo-aratu.png" alt="Logo BG" class="logo-hero-bg">
           <img src="/minami.png" alt="Aratsu Mascot" class="mascot-hero">
         </div>
       </div>
-      <div style="text-align: center; margin-top: 50px; margin-bottom: 30px; color: #555; letter-spacing: 4px; font-family: 'Bangers'; font-size: 1.4rem; position: relative; z-index: 10;">
-        JUNE 10, 2026 • GOR LEMBUPETENG • TULUNGAGUNG
+      <div class="hero-date-wrapper">
+        <span class="hero-date-badge">
+          JUNE 10, 2026 • GOR LEMBUPETENG • TULUNGAGUNG
+        </span>
       </div>
+      <img src="/minami-2.png" alt="Minami 2 Mascot" class="minami-top-left">
       <img src="/minami-3.png" alt="Minami 3 Mascot" class="minami-bottom-right">
       <img src="/minami-4.png" alt="Minami 4 Mascot" class="minami-bottom-left">
     </div>
 
     <section class="section" id="guests">
-      <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 50px; font-size: 3rem;">
+      <h2 style="display: flex; justify-content: center; gap: 15px; margin-bottom: 50px; font-size: 3rem; margin-top: 0; font-weight: normal;">
         <span class="title-aratsu">SPECIAL</span>
         <span class="title-no">GUESTS</span>
-      </div>
+      </h2>
       <div class="card-grid">
         <div class="guest-card" v-for="(guest, index) in guestsList" :key="index">
           <div :class="guest.images.length > 1 ? 'guest-image-split' : 'guest-image-single'">
@@ -94,11 +98,48 @@
       </div>
     </section>
 
+    <!-- Gallery Moment Section -->
+    <section class="section gallery-section" id="gallery">
+      <h2 style="display: flex; justify-content: center; gap: 15px; margin-bottom: 50px; font-size: 3.5rem; margin-top: 0; font-weight: normal;">
+        <span class="title-aratsu">GALLERY</span>
+        <span class="title-no">MOMENTS</span>
+      </h2>
+      <div class="gallery-grid">
+        <div class="gallery-item item-1">
+          <img src="/gallery1.jpg" alt="Performance">
+        </div>
+        <div class="gallery-item item-2">
+          <img src="/gallery2.jpg" alt="Cosplay">
+        </div>
+        <div class="gallery-item item-3">
+          <img src="/gallery3.jpg" alt="Community">
+        </div>
+        <div class="gallery-item item-4">
+          <img src="/gallery4.jpg" alt="Mascot">
+        </div>
+        <div class="gallery-item item-5">
+          <img src="/gallery5.jpg" alt="Crowd">
+        </div>
+        <div class="gallery-item item-6">
+          <img src="/gallery6.jpg" alt="Minami">
+        </div>
+      </div>
+    </section>
+
     <Footer />
   </div>
 </template>
 
 <script setup>
+useSeoMeta({
+  title: 'ARATU NO MATSURI VOL.3 | Pop Culture Festival Tulungagung',
+  ogTitle: 'ARATU NO MATSURI VOL.3 | Pop Culture Festival Tulungagung',
+  description: 'Bergabunglah dalam perayaan budaya populer terbesar di Tulungagung! Cosplay, Band, Idol, dan hiburan seru lainnya di Aratu No Matsuri.',
+  ogDescription: 'Bergabunglah dalam perayaan budaya populer terbesar di Tulungagung! Cosplay, Band, Idol, dan hiburan seru lainnya di Aratu No Matsuri.',
+  ogImage: '/logo-aratu.png',
+  twitterCard: 'summary_large_image',
+})
+
 const guestsList = [
   { name: 'HIROTO & LITA', role: 'Judge Coswalk Competition', images: ['/image.png'] },
   { name: 'ARDHIAN & SASHMIZU', role: 'Judge Cosplay Competition', images: ['/image (1).png'] },
@@ -236,6 +277,172 @@ const guestsList = [
   }
   .join-fun-title {
     font-size: 2.5rem;
+  }
+}
+
+/* Gallery Moment Section Styles */
+.gallery-section {
+  padding: 100px 20px;
+  background: radial-gradient(circle at 10% 20%, rgba(241, 196, 15, 0.05) 0%, transparent 20%),
+              radial-gradient(circle at 90% 80%, rgba(46, 134, 193, 0.05) 0%, transparent 20%);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.gallery-item {
+  background: white;
+  border: 4px solid var(--black-outline);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 12px 12px 0 var(--black-outline);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  position: relative;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border: 4px solid var(--black-outline);
+  border-radius: 8px;
+  display: block;
+}
+
+.gallery-caption {
+  font-family: 'Bangers';
+  font-size: 2rem;
+  text-align: center;
+  margin-top: 20px;
+  color: var(--black-outline);
+  text-shadow: 2px 2px 0 var(--yellow-matsuri);
+  letter-spacing: 1px;
+}
+
+.gallery-item:hover {
+  transform: translateY(-15px) rotate(3deg) scale(1.05);
+  box-shadow: 18px 18px 0 var(--black-outline);
+  z-index: 10;
+}
+
+.item-1 { transform: rotate(-3deg); }
+.item-2 { transform: rotate(2deg); }
+.item-3 { transform: rotate(-1.5deg); }
+.item-4 { transform: rotate(3deg); }
+.item-5 { transform: rotate(-2deg); }
+.item-6 { transform: rotate(1.5deg); }
+
+@media (max-width: 768px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .gallery-item {
+    transform: rotate(0) !important;
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+/* Hero Date Badge Styles */
+.hero-date-wrapper {
+  text-align: center;
+  margin-top: 60px;
+  margin-bottom: 30px;
+  position: relative;
+  z-index: 10;
+}
+
+.hero-date-badge {
+  display: inline-block;
+  background-color: var(--yellow-matsuri);
+  color: var(--black-outline);
+  padding: 14px 45px;
+  border-radius: 100px;
+  font-family: 'Bangers';
+  font-size: 1.6rem;
+  letter-spacing: 2px;
+  border: 4px solid var(--black-outline);
+  box-shadow: 8px 8px 0 var(--black-outline);
+  text-transform: uppercase;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.hero-date-badge:hover {
+  transform: scale(1.05) rotate(-1deg);
+  background-color: var(--blue-aratsu);
+  color: white;
+  box-shadow: 10px 10px 0 var(--black-outline);
+}
+
+@media (max-width: 768px) {
+  .hero-date-badge {
+    font-size: 1.1rem;
+    padding: 10px 25px;
+    letter-spacing: 1px;
+    margin: 0 10px;
+    box-shadow: 5px 5px 0 var(--black-outline);
+  }
+}
+
+/* Hero Mascot Background Logo */
+.logo-hero-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 140%;
+  max-width: 650px;
+  height: auto;
+  opacity: 0.1;
+  z-index: 1;
+  pointer-events: none;
+  filter: grayscale(1) brightness(0);
+  animation: slowRotate 40s linear infinite;
+}
+
+.mascot-hero {
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 768px) {
+  .logo-hero-bg {
+    display: none;
+  }
+}
+
+/* Mascot Positioning & Opacity Adjustments */
+.minami-top-left {
+  position: absolute;
+  top: 120px;
+  left: -40px;
+  max-width: 180px;
+  z-index: 5;
+  pointer-events: none;
+  filter: drop-shadow(4px 4px 0 var(--black-outline));
+  transform: rotate(10deg);
+  animation: float 5s ease-in-out infinite;
+}
+
+.minami-bottom-right {
+  opacity: 0.35 !important;
+  transition: opacity 0.3s ease;
+}
+
+.minami-bottom-right:hover {
+  opacity: 0.8 !important; /* Peek-a-boo effect */
+}
+
+@media (max-width: 768px) {
+  .minami-top-left {
+    display: none;
   }
 }
 </style>
