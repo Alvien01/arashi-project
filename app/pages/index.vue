@@ -30,7 +30,7 @@
       </div>
       <div class="hero-date-wrapper">
         <span class="hero-date-badge">
-          JUNE 10, 2026 • GOR LEMBUPETENG • TULUNGAGUNG
+          MEI 10, 2026 • GOR LEMBUPETENG • TULUNGAGUNG
         </span>
       </div>
       <img src="/minami-2.png" alt="Minami 2 Mascot" class="minami-top-left">

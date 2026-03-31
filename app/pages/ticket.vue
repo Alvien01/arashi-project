@@ -117,7 +117,7 @@
                   <span class="info-icon">📅</span>
                   <div class="info-text">
                     <strong>DATE</strong>
-                    <p>10 JUNI 2026</p>
+                    <p>10 MEI 2026</p>
                   </div>
                 </div>
               </div>

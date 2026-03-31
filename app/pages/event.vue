@@ -15,18 +15,18 @@
       <!-- Aratu Vol 2 -->
       <div class="history-card">
         <div class="history-image">
-          <img src="/minami.png" alt="Aratu Vol 2" />
+          <img src="/Aratu no Matsuri Vol.2.jpg" alt="Aratu Vol 2" />
         </div>
         <div class="history-content">
           <h2 class="history-title">ARATU NO MATSURI <span class="title-blue">VOL. 2</span></h2>
-          <p class="history-date">Agustus 2025 • GOR Lembupeteng</p>
+          <p class="history-date">Mei 2025 • GOR Lembupeteng</p>
           <p class="history-desc">
             Event kedua kami yang sukses membawa lebih dari 5.000 pengunjung! Vol. 2 menghadirkan lomba Coswalk terbesar di tahun itu, penampilan Idol Lokal yang memukau, dan lebih banyak booth komunitas dari berbagai kota.
           </p>
           <ul class="history-highlights">
-            <li>🌟 Kompetisi Cosplay Profesional dengan Juri Nasional</li>
-            <li>🎤 Idol & J-Band Performance (10+ Pengisi Acara)</li>
-            <li>🛍️ 30+ Kreator Lokal & Merchandise Booth Area</li>
+            <li>Coswalk & Cosplay Competition</li>
+            <li>Idol & J-Band Performance (10+ Pengisi Acara)</li>
+            <li>Komunitas Lokal & Merchandise Booth Area</li>
           </ul>
         </div>
       </div>
@@ -34,7 +34,7 @@
       <!-- Aratu Vol 1 -->
       <div class="history-card reverse-card">
         <div class="history-image">
-          <img src="/CHIBI COSWALK.png" alt="Aratu Vol 1" />
+          <img src="/Aratu no Matsuri Vol.1.jpg" alt="Aratu Vol 1" />
         </div>
         <div class="history-content">
           <h2 class="history-title">ARATU NO MATSURI <span class="title-red">VOL. 1</span></h2>
@@ -43,9 +43,10 @@
             Langkah pertama kami menuju festival pop culture (Jejepangan) terbesar di kota ini. Dibanjiri antusiasme luar biasa dari para wibu, weaboo, dan pegiat seni pop culture!
           </p>
           <ul class="history-highlights">
-            <li>🌟 J-Song & Karaoke Competition Perdana</li>
-            <li>🎤 Penampilan Band Jejepangan</li>
-            <li>🛍️ Itasha Exhibition Mini</li>
+            <li>J-Song & Karaoke Competition Perdana</li>
+            <li>Penampilan Band Jejepangan</li>
+            <li>Idol Performance</li>
+            <li>Coswalk & Cosplay Competition</li>
           </ul>
         </div>
       </div>
@@ -143,7 +144,8 @@ useSeoMeta({
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px;
+  padding: 0;
+  overflow: hidden;
 }
 
 .reverse-card .history-image {
@@ -153,9 +155,9 @@ useSeoMeta({
 }
 
 .history-image img {
-  max-width: 250px;
-  height: auto;
-  filter: drop-shadow(4px 4px 0 var(--black-outline));
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   transition: transform 0.3s ease;
 }
 
