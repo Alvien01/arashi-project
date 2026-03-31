@@ -19,7 +19,7 @@
         </div>
         <div class="history-content">
           <h2 class="history-title">ARATU NO MATSURI <span class="title-blue">VOL. 2</span></h2>
-          <p class="history-date">Mei 2025 • GOR Lembupeteng</p>
+          <p class="history-date">Mei 2025 • GOR Lembupeteng Tulungagung</p>
           <p class="history-desc">
             Event kedua kami yang sukses membawa lebih dari 5.000 pengunjung! Vol. 2 menghadirkan lomba Coswalk terbesar di tahun itu, penampilan Idol Lokal yang memukau, dan lebih banyak booth komunitas dari berbagai kota.
           </p>
@@ -38,7 +38,7 @@
         </div>
         <div class="history-content">
           <h2 class="history-title">ARATU NO MATSURI <span class="title-red">VOL. 1</span></h2>
-          <p class="history-date">Juli 2024 • Gedung Serbaguna</p>
+          <p class="history-date">Agustus 2024 • GOR Lembupeteng Tulungagung</p>
           <p class="history-desc">
             Langkah pertama kami menuju festival pop culture (Jejepangan) terbesar di kota ini. Dibanjiri antusiasme luar biasa dari para wibu, weaboo, dan pegiat seni pop culture!
           </p>
