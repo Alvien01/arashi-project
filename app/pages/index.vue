@@ -132,8 +132,8 @@
 
 <script setup>
 useSeoMeta({
-  title: 'ARATU NO MATSURI VOL.3 | Pop Culture Festival Tulungagung',
-  ogTitle: 'ARATU NO MATSURI VOL.3 | Pop Culture Festival Tulungagung',
+  title: 'ARATU NO MATSURI | Pop Culture Festival Tulungagung',
+  ogTitle: 'ARATU NO MATSURI | Pop Culture Festival Tulungagung',
   description: 'Bergabunglah dalam perayaan budaya populer terbesar di Tulungagung! Cosplay, Band, Idol, dan hiburan seru lainnya di Aratu No Matsuri.',
   ogDescription: 'Bergabunglah dalam perayaan budaya populer terbesar di Tulungagung! Cosplay, Band, Idol, dan hiburan seru lainnya di Aratu No Matsuri.',
   ogImage: '/logo-aratu.png',
