@@ -15,7 +15,7 @@
       <!-- Aratu Vol 2 -->
       <div class="history-card">
         <div class="history-image">
-          <img src="/Aratu no Matsuri Vol.2.jpg" alt="Aratu Vol 2" />
+          <img src="/Aratu no Matsuri Vol.2.jpg" alt="Aratu No Matsuri Vol. 2 Official Poster Tulungagung" />
         </div>
         <div class="history-content">
           <h2 class="history-title">ARATU NO MATSURI <span class="title-blue">VOL. 2</span></h2>
@@ -34,7 +34,7 @@
       <!-- Aratu Vol 1 -->
       <div class="history-card reverse-card">
         <div class="history-image">
-          <img src="/Aratu no Matsuri Vol.1.jpg" alt="Aratu Vol 1" />
+          <img src="/Aratu no Matsuri Vol.1.jpg" alt="Aratu No Matsuri Vol. 1 Official Poster Tulungagung" />
         </div>
         <div class="history-content">
           <h2 class="history-title">ARATU NO MATSURI <span class="title-red">VOL. 1</span></h2>
@@ -57,13 +57,43 @@
 </template>
 <script setup>
 useSeoMeta({
-  title: 'Previous Events History | Aratu No Matsuri',
-  ogTitle: 'Previous Events History | Aratu No Matsuri',
-  description: 'Melihat kembali momen tak terlupakan dari perjalanan Aratu No Matsuri Vol.1 dan Vol.2.',
-  ogDescription: 'Melihat kembali momen tak terlupakan dari perjalanan Aratu No Matsuri Vol.1 dan Vol.2.',
+  title: 'Riwayat Event | ARATU NO MATSURI Tulungagung',
+  ogTitle: 'Riwayat Event | ARATU NO MATSURI Tulungagung',
+  description: 'Melihat kembali keseruan Aratu No Matsuri Vol.1 dan Vol.2 di Tulungagung. Event Jejepangan terbesar dengan ribuan pengunjung!',
+  ogDescription: 'Melihat kembali keseruan Aratu No Matsuri Vol.1 dan Vol.2 di Tulungagung. Event Jejepangan terbesar dengan ribuan pengunjung!',
   ogImage: '/logo-aratu.png',
   twitterCard: 'summary_large_image',
+  keywords: 'riwayat event Aratu, Aratu No Matsuri Vol 1, Aratu No Matsuri Vol 2, event jejepangan Tulungagung'
 })
+
+useSchemaOrg([
+  defineEvent({
+    name: 'Aratu No Matsuri Vol. 1',
+    startDate: '2024-08-10',
+    location: {
+      name: 'GOR Lembupeteng',
+      address: 'Tulungagung'
+    },
+    image: '/Aratu no Matsuri Vol.1.jpg',
+    description: 'First pop culture festival in Tulungagung'
+  }),
+  defineEvent({
+    name: 'Aratu No Matsuri Vol. 2',
+    startDate: '2025-05-15',
+    location: {
+      name: 'GOR Lembupeteng',
+      address: 'Tulungagung'
+    },
+    image: '/Aratu no Matsuri Vol.2.jpg',
+    description: 'Second successful pop culture festival with 5000+ visitors'
+  }),
+  defineBreadcrumb({
+    itemListElement: [
+      { name: 'Home', item: '/' },
+      { name: 'Events', item: '/event' }
+    ]
+  })
+])
 </script>
 
 <style scoped>

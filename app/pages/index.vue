@@ -24,18 +24,18 @@
         </div>
 
         <div style="flex: 1; min-width: 300px; display: flex; justify-content: center; position: relative;">
-          <img src="/logo-aratu.png" alt="Logo BG" class="logo-hero-bg">
-          <img src="/minami.png" alt="Aratsu Mascot" class="mascot-hero">
+          <img src="/logo-aratu.png" alt="Aratu No Matsuri Official Logo Background" class="logo-hero-bg">
+          <img src="/minami.png" alt="Minami Mascot Aratu No Matsuri" class="mascot-hero">
         </div>
       </div>
       <div class="hero-date-wrapper">
         <span class="hero-date-badge">
-          MEI 10, 2026 • GOR LEMBUPETENG • TULUNGAGUNG
+          10 MEI 2026 • GOR LEMBUPETENG • TULUNGAGUNG
         </span>
       </div>
-      <img src="/minami-2.png" alt="Minami 2 Mascot" class="minami-top-left">
-      <img src="/minami-3.png" alt="Minami 3 Mascot" class="minami-bottom-right">
-      <img src="/minami-4.png" alt="Minami 4 Mascot" class="minami-bottom-left">
+      <img src="/minami-2.png" alt="Minami Chibi Mascot Aratu No Matsuri" class="minami-top-left">
+      <img src="/minami-3.png" alt="Minami Mascot Performing Aratu No Matsuri" class="minami-bottom-right">
+      <img src="/minami-4.png" alt="Minami Mascot Cute Pose Aratu No Matsuri" class="minami-bottom-left">
     </div>
 
     <section class="section" id="guests">
@@ -67,24 +67,24 @@
           <h2 class="section-title whatson-title">WHAT'S ON?</h2>
           <div class="whatson-grid">
             <div class="whatson-card">
-              <h4 class="whatson-card-title">COSPLAY COMPETITION & COSWALK</h4>
+              <h3 class="whatson-card-title">COSPLAY COMPETITION & COSWALK</h3>
               <p>Show your craft performance on the big stage!</p>
-              <img src="/CHIBI COSWALK.png" alt="Chibi Coswalk" class="chibi-icon chibi-br">
+              <img src="/CHIBI COSWALK.png" alt="Chibi Coswalk Aratu No Matsuri" class="chibi-icon chibi-br">
             </div>
             <div class="whatson-card">
-              <h4 class="whatson-card-title">IDOL & BAND PERFORMER</h4>
+              <h3 class="whatson-card-title">IDOL & BAND PERFORMER</h3>
               <p>Meet our special idol & band performer.</p>
-              <img src="/CHIBI MEDPAR.png" alt="Chibi Idol" class="chibi-icon chibi-br idol-chibi">
+              <img src="/CHIBI MEDPAR.png" alt="Chibi Idol Aratu No Matsuri" class="chibi-icon chibi-br idol-chibi">
             </div>
             <div class="whatson-card">
-              <h4 class="whatson-card-title">J-SONG COMPETITION</h4>
+              <h3 class="whatson-card-title">J-SONG COMPETITION</h3>
               <p>Show your talent on J-Song Competition!</p>
-              <img src="/CHIBI JSONG.png" alt="Chibi Jsong" class="chibi-icon chibi-br jsong-chibi">
+              <img src="/CHIBI JSONG.png" alt="Chibi Jsong Aratu No Matsuri" class="chibi-icon chibi-br jsong-chibi">
             </div>
             <div class="whatson-card">
-              <h4 class="whatson-card-title">COMUNITY & MERCH BOOTH</h4>
+              <h3 class="whatson-card-title">COMUNITY & MERCH BOOTH</h3>
               <p>Meet our special community & many merch booth.</p>
-              <img src="/CHIBI KOMUN.png" alt="Chibi Booth" class="chibi-icon chibi-br community-chibi">
+              <img src="/CHIBI KOMUN.png" alt="Chibi Booth Aratu No Matsuri" class="chibi-icon chibi-br community-chibi">
             </div>
           </div>
         </div>
@@ -106,22 +106,22 @@
       </h2>
       <div class="gallery-grid">
         <div class="gallery-item item-1">
-          <img src="/gallery1.jpg" alt="Performance">
+          <img src="/gallery1.jpg" alt="Aratu No Matsuri Stage Performance">
         </div>
         <div class="gallery-item item-2">
-          <img src="/gallery2.jpg" alt="Cosplay">
+          <img src="/gallery2.jpg" alt="Aratu No Matsuri Cosplay Competition">
         </div>
         <div class="gallery-item item-3">
-          <img src="/gallery3.jpg" alt="Community">
+          <img src="/gallery3.jpg" alt="Aratu No Matsuri Community Booth">
         </div>
         <div class="gallery-item item-4">
-          <img src="/gallery4.jpg" alt="Mascot">
+          <img src="/gallery4.jpg" alt="Aratu No Matsuri Mascot Exhibition">
         </div>
         <div class="gallery-item item-5">
-          <img src="/gallery5.jpg" alt="Crowd">
+          <img src="/gallery5.jpg" alt="Aratu No Matsuri Event Crowd Tulungagung">
         </div>
         <div class="gallery-item item-6">
-          <img src="/gallery6.jpg" alt="Minami">
+          <img src="/gallery6.jpg" alt="Minami Mascot Graphic Aratu No Matsuri">
         </div>
       </div>
     </section>
@@ -132,13 +132,38 @@
 
 <script setup>
 useSeoMeta({
-  title: 'ARATU NO MATSURI | Pop Culture Festival Tulungagung',
-  ogTitle: 'ARATU NO MATSURI | Pop Culture Festival Tulungagung',
-  description: 'Bergabunglah dalam perayaan budaya populer terbesar di Tulungagung! Cosplay, Band, Idol, dan hiburan seru lainnya di Aratu No Matsuri.',
-  ogDescription: 'Bergabunglah dalam perayaan budaya populer terbesar di Tulungagung! Cosplay, Band, Idol, dan hiburan seru lainnya di Aratu No Matsuri.',
+  title: 'ARATU NO MATSURI | Festival Pop Culture Terbesar di Tulungagung',
+  ogTitle: 'ARATU NO MATSURI | Festival Pop Culture Terbesar di Tulungagung',
+  description: 'Aratu No Matsuri Vol.3 - Event Jejepangan, Cosplay, Idol, dan J-Band terbesar di Tulungagung. 10 Mei 2026 di GOR Lembupeteng. Beli tiket sekarang!',
+  ogDescription: 'Aratu No Matsuri Vol.3 - Event Jejepangan, Cosplay, Idol, dan J-Band terbesar di Tulungagung. 10 Mei 2026 di GOR Lembupeteng. Beli tiket sekarang!',
   ogImage: '/logo-aratu.png',
   twitterCard: 'summary_large_image',
+  keywords: 'Aratu No Matsuri, event jejepangan Tulungagung, cosplay Tulungagung, festival anime, festival budaya populer, Matsuri Tulungagung, Aratu Vol 3, event Tulungagung 2026'
 })
+
+useSchemaOrg([
+  defineOrganization({
+    name: 'Aratu No Matsuri',
+    logo: '/logo-aratu.png',
+    sameAs: [
+      'https://instagram.com/aratunomatsuri' // Update with real social links
+    ],
+    address: {
+      addressLocality: 'Tulungagung',
+      addressRegion: 'Jawa Timur',
+      addressCountry: 'ID'
+    }
+  }),
+  defineWebSite({
+    name: 'Aratu No Matsuri',
+    description: 'The Biggest Pop Culture Event in Tulungagung'
+  }),
+  defineBreadcrumb({
+    itemListElement: [
+      { name: 'Home', item: '/' }
+    ]
+  })
+])
 
 const guestsList = [
   { name: 'HIROTO & LITA', role: 'Judge Coswalk Competition', images: ['/image.png'] },

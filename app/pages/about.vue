@@ -30,7 +30,15 @@
 </template>
 
 <script setup>
-// Use the common components
+useSeoMeta({
+  title: 'Tentang Kami | ARATU NO MATSURI Tulungagung',
+  ogTitle: 'Tentang Kami | ARATU NO MATSURI Tulungagung',
+  description: 'Kenali lebih jauh tentang Aratu No Matsuri, festival pop culture terbesar di Tulungagung yang mewadahi komunitas kreatif dan pecinta anime.',
+  ogDescription: 'Kenali lebih jauh tentang Aratu No Matsuri, festival pop culture terbesar di Tulungagung yang mewadahi komunitas kreatif dan pecinta anime.',
+  ogImage: '/logo-aratu.png',
+  twitterCard: 'summary_large_image',
+  keywords: 'tentang Aratu No Matsuri, komunitas anime Tulungagung, sejarah Aratu'
+})
 </script>
 
 <style scoped>

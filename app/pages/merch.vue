@@ -33,7 +33,7 @@
           class="merch-card"
         >
           <div class="merch-image-box">
-            <img :src="item.image" :alt="item.name" class="merch-img">
+            <img :src="item.image" :alt="item.name + ' - Aratu No Matsuri Vol 3 Exclusive Merch'" class="merch-img">
             <div v-if="item.isNew" class="badge-new">NEW!</div>
             <div class="merch-price">Rp {{ item.price.toLocaleString() }}</div>
           </div>
@@ -53,6 +53,33 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+
+useSeoMeta({
+  title: 'Official Merch | ARATU NO MATSURI Tulungagung',
+  ogTitle: 'Official Merch | ARATU NO MATSURI Tulungagung',
+  description: 'Koleksi merchandise eksklusif Aratu No Matsuri Vol.3. Kaos, Keychain, Poster, dan aksesoris keren lainnya. Beli sekarang sebelum kehabisan!',
+  ogDescription: 'Koleksi merchandise eksklusif Aratu No Matsuri Vol.3. Kaos, Keychain, Poster, dan aksesoris keren lainnya. Beli sekarang sebelum kehabisan!',
+  ogImage: '/logo-aratu.png',
+  twitterCard: 'summary_large_image',
+  keywords: 'merchandise Aratu, kaos anime Tulungagung, gantungan kunci Aratu, poster Aratu Vol 3'
+})
+
+useSchemaOrg([
+  defineItemList({
+    name: 'Official Merch Aratu No Matsuri Vol. 3',
+    itemListElement: [
+      { name: 'Official Vol.3 Black Tee', position: 1 },
+      { name: 'Minami Chibi Keychain', position: 2 },
+      { name: 'Limited Edition Event Poster', position: 3 }
+    ]
+  }),
+  defineBreadcrumb({
+    itemListElement: [
+      { name: 'Home', item: '/' },
+      { name: 'Merch', item: '/merch' }
+    ]
+  })
+])
 
 const activeCategory = ref('ALL')
 const categories = ['ALL', 'T-SHIRT', 'KEYCHAIN', 'POSTER', 'OTHERS']

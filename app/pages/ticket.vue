@@ -70,7 +70,7 @@
                 <div class="payment-section">
                   <h3 class="payment-title">TRANSFER KE:</h3>
                   <div class="qris-box">
-                    <img src="/CHIBI KOMUN.png" alt="QRIS Aratu" class="qris-img">
+                    <img src="/CHIBI KOMUN.png" alt="QRIS Payment Method Aratu No Matsuri Vol 3" class="qris-img">
                     <p class="qris-note">SCAN UNTUK BAYAR</p>
                   </div>
                 </div>
@@ -144,6 +144,28 @@
 
 <script setup>
 import { ref, reactive, computed } from 'vue'
+
+useSeoMeta({
+  title: 'Beli Tiket | ARATU NO MATSURI Tulungagung',
+  ogTitle: 'Beli Tiket | ARATU NO MATSURI Tulungagung',
+  description: 'Dapatkan tiket Aratu No Matsuri Vol.3 sekarang! Regular Pass dan VIP Pass tersedia. Slot terbatas, jangan sampai kehabisan!',
+  ogDescription: 'Dapatkan tiket Aratu No Matsuri Vol.3 sekarang! Regular Pass dan VIP Pass tersedia. Slot terbatas, jangan sampai kehabisan!',
+  ogImage: '/logo-aratu.png',
+  twitterCard: 'summary_large_image',
+  keywords: 'tiket Aratu No Matsuri, beli tiket event Tulungagung, harga tiket Aratu, VIP pass Aratu'
+})
+
+useSchemaOrg([
+  defineWebPage({
+    name: 'Beli Tiket Aratu No Matsuri',
+  }),
+  defineBreadcrumb({
+    itemListElement: [
+      { name: 'Home', item: '/' },
+      { name: 'Tickets', item: '/ticket' }
+    ]
+  })
+])
 
 const isSubmitting = ref(false)
 
