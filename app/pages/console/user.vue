@@ -109,6 +109,7 @@ const showModal = ref(false)
 const modalMode = ref('create')
 
 const { getAllUsers, createUser, updateUser, deleteUser } = useUsers()
+const { success, error, confirm } = useNotification()
 
 const users = ref([])
 const fetchUsers = async () => {
@@ -156,18 +157,28 @@ const saveUser = async () => {
         }
         await fetchUsers()
         showModal.value = false
-    } catch (error) {
-        alert('Failed to save user')
+        success(`User successfully ${modalMode.value === 'create' ? 'created' : 'updated'}!`)
+    } catch (err) {
+        error('Failed to save user info.')
     }
 }
 
 const handleDelete = async (id) => {
-    if (confirm('Permanently delete this user?')) {
+    const isConfirmed = await confirm({
+        title: 'DELETE USER?',
+        message: 'Are you sure you want to permanently delete this user account?',
+        confirmText: 'DELETE ACCOUNT',
+        cancelText: 'KEEP USER',
+        type: 'danger'
+    })
+
+    if (isConfirmed) {
         try {
             await deleteUser(id)
             await fetchUsers()
-        } catch (error) {
-            alert('Failed to delete user')
+            success('User account has been deleted.')
+        } catch (err) {
+            error('Failed to delete user.')
         }
     }
 }

@@ -72,6 +72,10 @@
         <slot />
       </div>
     </main>
+
+    <!-- Global Notification System -->
+    <NotificationToast />
+    <ConfirmModal />
   </div>
 </template>
 

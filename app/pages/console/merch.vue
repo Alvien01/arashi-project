@@ -126,6 +126,7 @@ const showModal = ref(false)
 const modalMode = ref('create')
 
 const { getAllMerch, addMerchItem, updateMerchItem, deleteMerchItem } = useMerch()
+const { success, error, confirm } = useNotification()
 
 const merchItems = ref([])
 const fetchMerch = async () => {
@@ -172,18 +173,28 @@ const saveMerch = async () => {
         }
         await fetchMerch()
         showModal.value = false
-    } catch (error) {
-        alert('Failed to save product')
+        success(`Product "${form.nama_produk}" successfully ${modalMode.value === 'create' ? 'added' : 'updated'}!`)
+    } catch (err) {
+        error('Failed to save product information.')
     }
 }
 
 const handleDelete = async (id) => {
-    if (confirm('Delete this product?')) {
+    const isConfirmed = await confirm({
+        title: 'DELETE PRODUCT?',
+        message: 'Are you sure you want to remove this item from the store?',
+        confirmText: 'YES, REMOVE IT',
+        cancelText: 'KEEP PRODUCT',
+        type: 'danger'
+    })
+
+    if (isConfirmed) {
         try {
             await deleteMerchItem(id)
             await fetchMerch()
-        } catch (error) {
-            alert('Failed to delete product')
+            success('Product has been removed from merchandise list.')
+        } catch (err) {
+            error('Failed to delete product.')
         }
     }
 }

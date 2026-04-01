@@ -104,6 +104,7 @@ const showModal = ref(false)
 const modalMode = ref('create')
 
 const { getAllEvents, createEvent, updateEvent, deleteEvent } = useEvents()
+const { success, error, confirm } = useNotification()
 
 const events = ref([])
 const fetchEvents = async () => {
@@ -162,18 +163,28 @@ const saveEvent = async () => {
         }
         await fetchEvents()
         showModal.value = false
-    } catch (error) {
-        alert('Failed to save event')
+        success(`Event successfully ${modalMode.value === 'create' ? 'created' : 'updated'}!`)
+    } catch (err) {
+        error('Failed to save event. Please check your data.')
     }
 }
 
 const handleDelete = async (id) => {
-    if (confirm('Are you sure you want to delete this event?')) {
+    const isConfirmed = await confirm({
+        title: 'DELETE EVENT?',
+        message: 'Are you sure? This action is irreversible!',
+        confirmText: 'YES, DELETE',
+        cancelText: 'CANCEL',
+        type: 'danger'
+    })
+
+    if (isConfirmed) {
         try {
             await deleteEvent(id)
             await fetchEvents()
-        } catch (error) {
-            alert('Failed to delete event')
+            success('Event has been deleted successfully.')
+        } catch (err) {
+            error('Failed to delete event.')
         }
     }
 }
