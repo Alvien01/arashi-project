@@ -34,8 +34,7 @@
             <thead>
               <tr>
                 <th>EVENT NAME</th>
-                <th>LOCATION</th>
-                <th>CREATED AT</th>
+                <th>STATUS</th>
                 <th>ACTIONS</th>
               </tr>
             </thead>
