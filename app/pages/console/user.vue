@@ -19,8 +19,8 @@
         <div class="filter-wrap">
           <select v-model="roleFilter">
             <option value="all">ALL ROLES</option>
-            <option value="SUPERADMIN">SUPERADMIN</option>
-            <option value="STAFF">STAFF</option>
+            <option value="admin">ADMIN</option>
+            <option value="user">USER</option>
           </select>
         </div>
       </div>
@@ -32,7 +32,7 @@
               <tr>
                 <th>USER INFO</th>
                 <th>ROLE</th>
-                <th>LAST LOGIN</th>
+                <th>CREATED AT</th>
                 <th>ACTIONS</th>
               </tr>
             </thead>
@@ -40,7 +40,7 @@
               <tr v-for="user in filteredUsers" :key="user.id">
                 <td class="td-user">
                   <div class="user-wrap">
-                    <div class="user-avatar">{{ user.name.charAt(0) }}</div>
+                    <div class="user-avatar">{{ (user.name || '').charAt(0) }}</div>
                     <div class="user-details">
                       <span class="user-fullname">{{ user.name }}</span>
                       <span class="user-email">{{ user.email }}</span>
@@ -48,10 +48,10 @@
                   </div>
                 </td>
                 <td>
-                  <span :class="['badge-role', user.role.toLowerCase()]">{{ user.role }}</span>
+                  <span :class="['badge-role', (user.role || '').toLowerCase()]">{{ (user.role || '').toUpperCase() }}</span>
                 </td>
                 <td>
-                  <span class="last-login">{{ user.lastLogin }}</span>
+                  <span class="last-login">{{ user.created_at ? new Date(user.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) : '-' }}</span>
                 </td>
                 <td>
                   <div class="action-wrap">
@@ -75,17 +75,21 @@
           <form @submit.prevent="saveUser" class="modal-form">
             <div class="form-group">
               <label>FULL NAME</label>
-              <input type="text" v-model="form.name" required>
+              <input type="text" v-model="form.name" required maxlength="100" placeholder="Max 100 characters">
             </div>
             <div class="form-group">
               <label>EMAIL ADDRESS</label>
-              <input type="email" v-model="form.email" required>
+              <input type="email" v-model="form.email" required maxlength="255" placeholder="user@example.com">
+            </div>
+            <div class="form-group" v-if="modalMode === 'create'">
+              <label>PASSWORD</label>
+              <input type="password" v-model="form.password" required minlength="6" placeholder="Min 6 characters">
             </div>
             <div class="form-group">
               <label>ROLE</label>
               <select v-model="form.role">
-                <option value="SUPERADMIN">SUPERADMIN</option>
-                <option value="STAFF">STAFF</option>
+                <option value="admin">ADMIN</option>
+                <option value="user">USER</option>
               </select>
             </div>
             <button type="submit" class="btn-save">SAVE USER</button>
@@ -97,24 +101,38 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed, onMounted } from 'vue'
 
 const searchQuery = ref('')
 const roleFilter = ref('all')
 const showModal = ref(false)
 const modalMode = ref('create')
 
-const users = ref([
-    { id: 1, name: 'ADMIN ARATU', email: 'admin@aratu.com', role: 'SUPERADMIN', lastLogin: '10 Min ago' },
-    { id: 2, name: 'SASHMIZU STAFF', email: 'sash@aratu.com', role: 'STAFF', lastLogin: 'Yesterday' }
-])
+const { getAllUsers, createUser, updateUser, deleteUser } = useUsers()
 
-const form = reactive({ id: null, name: '', email: '', role: 'STAFF' })
+const users = ref([])
+const fetchUsers = async () => {
+    try {
+        const { data: res } = await getAllUsers()
+        if (res.value?.data) {
+            users.value = res.value.data
+        }
+    } catch (error) {
+        console.error('Failed to fetch users:', error)
+    }
+}
+
+onMounted(() => {
+    fetchUsers()
+})
+
+const form = reactive({ id: null, name: '', email: '', password: '', role: 'user' })
 
 const filteredUsers = computed(() => {
+    if (!users.value) return []
     return users.value.filter(u => {
-        const matchesSearch = u.name.toLowerCase().includes(searchQuery.value.toLowerCase()) || 
-                              u.email.toLowerCase().includes(searchQuery.value.toLowerCase())
+        const matchesSearch = (u.name || '').toLowerCase().includes(searchQuery.value.toLowerCase()) || 
+                              (u.email || '').toLowerCase().includes(searchQuery.value.toLowerCase())
         const matchesRole = roleFilter.value === 'all' || u.role === roleFilter.value
         return matchesSearch && matchesRole
     })
@@ -123,23 +141,34 @@ const filteredUsers = computed(() => {
 const openModal = (mode, user = null) => {
     modalMode.value = mode
     if (user) Object.assign(form, user)
-    else Object.assign(form, { id: null, name: '', email: '', role: 'STAFF' })
+    else Object.assign(form, { id: null, name: '', email: '', password: '', role: 'user' })
     showModal.value = true
 }
 
-const saveUser = () => {
-    if (modalMode.value === 'create') {
-        users.value.push({ ...form, id: Date.now(), lastLogin: 'Never' })
-    } else {
-        const idx = users.value.findIndex(u => u.id === form.id)
-        if (idx !== -1) users.value[idx] = { ...users.value[idx], ...form }
+const saveUser = async () => {
+    try {
+        if (modalMode.value === 'create') {
+            await createUser({ name: form.name, email: form.email, password: form.password, role: form.role })
+        } else {
+            // Don't send password on update unless changed
+            const updateData = { name: form.name, email: form.email, role: form.role }
+            await updateUser(form.id, updateData)
+        }
+        await fetchUsers()
+        showModal.value = false
+    } catch (error) {
+        alert('Failed to save user')
     }
-    showModal.value = false
 }
 
-const handleDelete = (id) => {
+const handleDelete = async (id) => {
     if (confirm('Permanently delete this user?')) {
-        users.value = users.value.filter(u => u.id !== id)
+        try {
+            await deleteUser(id)
+            await fetchUsers()
+        } catch (error) {
+            alert('Failed to delete user')
+        }
     }
 }
 </script>
@@ -190,8 +219,8 @@ const handleDelete = (id) => {
 .user-email { font-size: 0.8rem; color: #94a3b8; font-weight: 800; }
 
 .badge-role { padding: 6px 12px; border: 2px solid var(--black-outline); border-radius: 50px; font-size: 0.7rem; font-weight: 800; }
-.badge-role.superadmin { background: #fef9c3; color: #854d0e; }
-.badge-role.staff { background: #f1f5f9; color: #475569; }
+.badge-role.admin { background: #fef9c3; color: #854d0e; }
+.badge-role.user { background: #f1f5f9; color: #475569; }
 
 .last-login { font-weight: 800; font-size: 0.8rem; color: #94a3b8; }
 

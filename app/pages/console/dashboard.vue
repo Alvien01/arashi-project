@@ -7,23 +7,23 @@
       <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-label">TOTAL TICKET SOLD</div>
-          <div class="stat-value">1,234</div>
+          <div class="stat-value">{{ tickets.length }}</div>
           <div class="stat-trend">+12% from last month</div>
         </div>
         <div class="stat-card">
           <div class="stat-label">TOTAL REVENUE (NET)</div>
-          <div class="stat-value">Rp 30.8M</div>
+          <div class="stat-value">Rp {{ totalRevenue.toLocaleString() }}</div>
           <div class="stat-trend">+5% from last month</div>
         </div>
         <div class="stat-card">
           <div class="stat-label">TOTAL USERS</div>
-          <div class="stat-value">456</div>
+          <div class="stat-value">{{ userCount }}</div>
           <div class="stat-trend">+2 new today</div>
         </div>
         <div class="stat-card">
           <div class="stat-label">ACTIVE EVENTS</div>
-          <div class="stat-value">2</div>
-          <div class="stat-trend">Vol. 3 is running</div>
+          <div class="stat-value">{{ eventCount }}</div>
+          <div class="stat-trend">{{ latestEventName }} is running</div>
         </div>
       </div>
 
@@ -41,26 +41,15 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>#ORD-1001</td>
-                <td>Alvien Arashi</td>
-                <td>VIP PASS</td>
-                <td>Mar 30, 2026</td>
-                <td><span class="badge success">PAID</span></td>
+              <tr v-for="ticket in recentTickets" :key="ticket.id">
+                <td>#{{ ticket.id }}</td>
+                <td>{{ ticket.nama_pembeli || ticket.user_name || 'N/A' }}</td>
+                <td>{{ (ticket.jenis_tiket || ticket.type || '').toUpperCase() }}</td>
+                <td>{{ ticket.created_at ? new Date(ticket.created_at).toLocaleDateString() : '-' }}</td>
+                <td><span :class="['badge', (ticket.status || 'pending').toLowerCase()]">{{ (ticket.status || 'PENDING').toUpperCase() }}</span></td>
               </tr>
-              <tr>
-                <td>#ORD-1002</td>
-                <td>Budi Doremi</td>
-                <td>REGULAR</td>
-                <td>Mar 30, 2026</td>
-                <td><span class="badge warning">PENDING</span></td>
-              </tr>
-              <tr>
-                <td>#ORD-1003</td>
-                <td>Cindy Larsson</td>
-                <td>EARLY BIRD</td>
-                <td>Mar 29, 2026</td>
-                <td><span class="badge success">PAID</span></td>
+              <tr v-if="recentTickets.length === 0">
+                <td colspan="5" style="text-align: center; padding: 30px;">No recent ticket sales found.</td>
               </tr>
             </tbody>
           </table>
@@ -69,6 +58,63 @@
     </div>
   </NuxtLayout>
 </template>
+
+<script setup>
+import { ref, onMounted, computed } from 'vue'
+
+const { getAllTickets } = useTickets()
+const { getAllUsers } = useUsers()
+const { getAllEvents } = useEvents()
+
+const tickets = ref([])
+const events = ref([])
+const userCount = ref(0)
+const eventCount = ref(0)
+
+const fetchDashboardData = async () => {
+    try {
+        // Fetch tickets for table & revenue
+        const { data: ticketRes } = await getAllTickets()
+        if (ticketRes.value?.data) {
+          tickets.value = ticketRes.value.data
+        }
+
+        // Fetch users for count
+        const { data: userRes } = await getAllUsers()
+        if (userRes.value?.data) {
+          userCount.value = userRes.value.data.length
+        }
+
+        // Fetch events for count
+        const { data: eventRes } = await getAllEvents()
+        if (eventRes.value?.data) {
+          events.value = eventRes.value.data
+          eventCount.value = events.value.length
+        }
+    } catch (error) {
+        console.error('Failed to fetch dashboard data:', error)
+    }
+}
+
+onMounted(() => {
+    fetchDashboardData()
+})
+
+const recentTickets = computed(() => {
+    return Array.isArray(tickets.value) ? tickets.value.slice(0, 5) : []
+})
+
+const latestEventName = computed(() => {
+  if (!events.value.length) return 'No events'
+  // Get the most recent event by created_at if possible, otherwise just the first
+  return events.value[0].nama_event || 'General Event'
+})
+
+const totalRevenue = computed(() => {
+  if (!Array.isArray(tickets.value)) return 0
+  return tickets.value.reduce((total, t) => total + (Number(t.price) || 0), 0)
+})
+</script>
 
 <style scoped>
 .dashboard-page {

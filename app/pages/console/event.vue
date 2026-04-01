@@ -34,9 +34,8 @@
             <thead>
               <tr>
                 <th>EVENT NAME</th>
-                <th>DATE & TIME</th>
-                <th>TICKETS</th>
-                <th>STATUS</th>
+                <th>LOCATION</th>
+                <th>CREATED AT</th>
                 <th>ACTIONS</th>
               </tr>
             </thead>
@@ -44,23 +43,15 @@
               <tr v-for="event in filteredEvents" :key="event.id">
                 <td class="td-name">
                   <div class="name-wrap">
-                    <span class="main-name">{{ event.name }}</span>
-                    <span class="sub-name">{{ event.location }}</span>
+                    <span class="main-name">{{ event.nama_event }}</span>
+                    <span class="sub-name">{{ event.lokasi }}</span>
                   </div>
                 </td>
                 <td>
-                  <div class="date-wrap">
-                    <div class="date">{{ event.date }}</div>
-                    <div class="time">{{ event.time }}</div>
-                  </div>
+                   <span class="date">{{ event.created_at ? new Date(event.created_at).toLocaleDateString() : '-' }}</span>
                 </td>
                 <td>
-                  <div class="ticket-stat">
-                    <span class="sold">{{ event.sold }}</span> / <span class="total">{{ event.total }}</span>
-                  </div>
-                </td>
-                <td>
-                  <span :class="['badge', event.status]">{{ event.status.toUpperCase() }}</span>
+                  <div class="badge active">{{ (event.status || 'ACTIVE').toUpperCase() }}</div>
                 </td>
                 <td>
                   <div class="action-wrap">
@@ -85,22 +76,16 @@
             <div class="form-row">
               <div class="form-group">
                 <label>EVENT NAME</label>
-                <input type="text" v-model="form.name" required>
+                <input type="text" v-model="form.nama_event" required placeholder="Event Name">
               </div>
               <div class="form-group">
                 <label>LOCATION</label>
-                <input type="text" v-model="form.location" required>
+                <input type="text" v-model="form.lokasi" required placeholder="Location">
               </div>
             </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>DATE</label>
-                <input type="date" v-model="form.date">
-              </div>
-              <div class="form-group">
-                <label>TIME</label>
-                <input type="time" v-model="form.time">
-              </div>
+            <div class="form-group">
+              <label>DESCRIPTION</label>
+              <textarea v-model="form.deskripsi" rows="3" placeholder="Description"></textarea>
             </div>
             <button type="submit" class="btn-save">SAVE EVENT</button>
           </form>
@@ -111,48 +96,85 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed, onMounted } from 'vue'
 
 const searchQuery = ref('')
 const statusFilter = ref('all')
 const showModal = ref(false)
 const modalMode = ref('create')
 
-const events = ref([
-    { id: 1, name: 'ARATU NO MATSURI VOL. 3', location: 'GOR LEMBUPETENG', date: '10 JUN 2026', time: '10:00 AM', sold: 1250, total: 2000, status: 'active' },
-    { id: 2, name: 'TULUNGAGUNG MATSURI VOL. 2', location: 'TULUNGAGUNG MALL', date: '12 DEC 2024', time: '1:00 PM', sold: 1800, total: 1800, status: 'finished' }
-])
+const { getAllEvents, createEvent, updateEvent, deleteEvent } = useEvents()
 
-const form = reactive({ id: null, name: '', location: '', date: '', time: '' })
+const events = ref([])
+const fetchEvents = async () => {
+    try {
+        const { data: res } = await getAllEvents()
+        if (res.value?.data) {
+            events.value = res.value.data
+        }
+    } catch (error) {
+        console.error('Failed to fetch events:', error)
+    }
+}
+
+onMounted(() => {
+    fetchEvents()
+})
+
+const form = reactive({ 
+  id: null, 
+  nama_event: '', 
+  lokasi: '', 
+  deskripsi: '', 
+  poster: null 
+})
 
 const filteredEvents = computed(() => {
+    if (!events.value) return []
     return events.value.filter(e => {
-        const matchesSearch = e.name.toLowerCase().includes(searchQuery.value.toLowerCase())
-        const matchesStatus = statusFilter.value === 'all' || e.status === statusFilter.value
-        return matchesSearch && matchesStatus
+        const matchesSearch = (e.nama_event || '').toLowerCase().includes(searchQuery.value.toLowerCase())
+        return matchesSearch
     })
 })
 
 const openModal = (mode, event = null) => {
     modalMode.value = mode
-    if (event) Object.assign(form, event)
-    else Object.assign(form, { id: null, name: '', location: '', date: '', time: '' })
+    if (event) {
+        Object.assign(form, event)
+    } else {
+        Object.assign(form, { 
+          id: null, 
+          nama_event: '', 
+          lokasi: '', 
+          deskripsi: '', 
+          poster: null 
+        })
+    }
     showModal.value = true
 }
 
-const saveEvent = () => {
-    if (modalMode.value === 'create') {
-        events.value.push({ ...form, id: Date.now(), sold: 0, total: 1000, status: 'active' })
-    } else {
-        const idx = events.value.findIndex(e => e.id === form.id)
-        if (idx !== -1) events.value[idx] = { ...events.value[idx], ...form }
+const saveEvent = async () => {
+    try {
+        if (modalMode.value === 'create') {
+            await createEvent({ ...form })
+        } else {
+            await updateEvent(form.id, { ...form })
+        }
+        await fetchEvents()
+        showModal.value = false
+    } catch (error) {
+        alert('Failed to save event')
     }
-    showModal.value = false
 }
 
-const handleDelete = (id) => {
+const handleDelete = async (id) => {
     if (confirm('Are you sure you want to delete this event?')) {
-        events.value = events.value.filter(e => e.id !== id)
+        try {
+            await deleteEvent(id)
+            await fetchEvents()
+        } catch (error) {
+            alert('Failed to delete event')
+        }
     }
 }
 </script>

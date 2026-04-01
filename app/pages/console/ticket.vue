@@ -22,22 +22,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>#ORD-1001</td>
-                <td>Alvien Arashi</td>
-                <td><span class="ticket-type vip">VIP PASS</span></td>
-                <td>Mar 30, 2026</td>
-                <td><span class="badge success">PAID</span></td>
-                <td>
-                  <button class="action-btn-outline">VIEW DETAILS</button>
-                </td>
-              </tr>
-              <tr>
-                <td>#ORD-1002</td>
-                <td>Budi Doremi</td>
-                <td><span class="ticket-type active">REGULAR</span></td>
-                <td>Mar 30, 2026</td>
-                <td><span class="badge warning">PENDING</span></td>
+              <tr v-for="ticket in filteredTickets" :key="ticket.id">
+                <td>#{{ ticket.id }}</td>
+                <td>{{ ticket.nama_pembeli || ticket.user_name || 'N/A' }}</td>
+                <td><span :class="['ticket-type', (ticket.jenis_tiket || ticket.type || '').toLowerCase()]">{{ (ticket.jenis_tiket || ticket.type || '').toUpperCase() }}</span></td>
+                <td>{{ ticket.created_at ? new Date(ticket.created_at).toLocaleDateString() : '-' }}</td>
+                <td><span :class="['badge', (ticket.status || 'pending').toLowerCase()]">{{ (ticket.status || 'PENDING').toUpperCase() }}</span></td>
                 <td>
                   <button class="action-btn-outline">VIEW DETAILS</button>
                 </td>
@@ -51,8 +41,36 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+
 const searchQuery = ref('')
+const { getAllTickets } = useTickets()
+
+const tickets = ref([])
+const fetchTickets = async () => {
+    try {
+        const { data: res } = await getAllTickets()
+        if (res.value?.data) {
+            tickets.value = res.value.data
+        }
+    } catch (error) {
+        console.error('Failed to fetch tickets:', error)
+    }
+}
+
+onMounted(() => {
+    fetchTickets()
+})
+
+const filteredTickets = computed(() => {
+    if (!tickets.value) return []
+    return tickets.value.filter(t => {
+        const buyerName = (t.nama_pembeli || t.user_name || '').toLowerCase()
+        const orderId = String(t.id).toLowerCase()
+        const search = searchQuery.value.toLowerCase()
+        return buyerName.includes(search) || orderId.includes(search)
+    })
+})
 </script>
 
 <style scoped>

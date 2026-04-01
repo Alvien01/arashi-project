@@ -16,13 +16,13 @@
 
         <form @submit.prevent="handleLogin" class="login-form">
           <div class="form-group">
-            <label for="username">USERNAME</label>
+            <label for="email">EMAIL</label>
             <div class="input-wrapper">
               <input 
-                type="text" 
-                id="username" 
-                v-model="loginData.username" 
-                placeholder="Enter your username"
+                type="email" 
+                id="email" 
+                v-model="loginData.email" 
+                placeholder="Enter your email"
                 required
               >
             </div>
@@ -71,17 +71,31 @@ definePageMeta({
 const showPassword = ref(false)
 const isLoading = ref(false)
 const loginData = reactive({
-  username: '',
+  email: '',
   password: ''
 })
 
-const handleLogin = () => {
+const { login } = useAuth()
+const router = useRouter()
+
+const handleLogin = async () => {
   isLoading.value = true
-  // Simulate login
-  setTimeout(() => {
-    alert('Login attempted: ' + loginData.username)
+  try {
+    const result = await login({
+      email: loginData.email,
+      password: loginData.password
+    })
+
+    if (result.success) {
+      router.push('/console/dashboard')
+    } else {
+      alert(result.message || 'Login failed')
+    }
+  } catch (error) {
+    alert('An error occurred during login')
+  } finally {
     isLoading.value = false
-  }, 1500)
+  }
 }
 </script>
 

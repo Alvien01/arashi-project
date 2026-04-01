@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   
   // Site Configuration for SEO
   site: {
-    url: 'https://aratunomatsuri.vercel.app', // Replace with your production URL
+    url: 'https://aratunomatsuri.vercel.app', 
     name: 'ARATU NO MATSURI',
     description: 'Aratu No Matsuri adalah festival pop culture (jejepangan) terbesar di Tulungagung. Nikmati lomba cosplay, konser musik, booth komunitas, dan masih banyak lagi.',
     defaultLocale: 'id',
@@ -36,6 +36,13 @@ export default defineNuxtConfig({
   robots: {
     allow: '/',
     sitemap: '/sitemap.xml'
+  },
+
+  // Runtime Configuration for API
+  runtimeConfig: {
+    public: {
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || 'https://express-backend-orpin.vercel.app/'
+    }
   },
 
   app: {

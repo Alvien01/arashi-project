@@ -146,7 +146,7 @@ useSchemaOrg([
     name: 'Aratu No Matsuri',
     logo: '/logo-aratu.png',
     sameAs: [
-      'https://instagram.com/aratunomatsuri' // Update with real social links
+      'https://instagram.com/aratunomatsuri'
     ],
     address: {
       addressLocality: 'Tulungagung',
@@ -283,7 +283,7 @@ const guestsList = [
     letter-spacing: 1px;
   }
   .chibi-icon {
-    width: 80px; /* Perkecil sedikit di mobile agar tidak terlalu keluar */
+    width: 80px; 
   }
   .chibi-bl { bottom: -15px; left: -15px; }
   .chibi-tr { top: -15px; right: -15px; }
@@ -305,7 +305,6 @@ const guestsList = [
   }
 }
 
-/* Gallery Moment Section Styles */
 .gallery-section {
   padding: 100px 20px;
   background: radial-gradient(circle at 10% 20%, rgba(241, 196, 15, 0.05) 0%, transparent 20%),
@@ -443,7 +442,6 @@ const guestsList = [
   }
 }
 
-/* Mascot Positioning & Opacity Adjustments */
 .minami-top-left {
   position: absolute;
   top: 120px;
@@ -462,7 +460,7 @@ const guestsList = [
 }
 
 .minami-bottom-right:hover {
-  opacity: 0.8 !important; /* Peek-a-boo effect */
+  opacity: 0.8 !important; 
 }
 
 @media (max-width: 768px) {

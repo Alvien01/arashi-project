@@ -46,23 +46,23 @@
                 <td class="td-product">
                   <div class="product-wrap">
                     <div class="product-img-box">
-                      <img :src="item.image" :alt="item.name">
+                      <img :src="item.foto || item.image || '/placeholder.png'" :alt="item.nama_produk">
                     </div>
                     <div class="product-name-info">
-                      <span class="main-name">{{ item.name }}</span>
+                      <span class="main-name">{{ item.nama_produk }}</span>
                       <span v-if="item.isNew" class="new-badge">NEW</span>
                     </div>
                   </div>
                 </td>
                 <td>
-                  <span class="cat-label">{{ item.category }}</span>
+                  <span class="cat-label">{{ item.kategori }}</span>
                 </td>
                 <td>
-                  <span class="price-label">Rp {{ item.price.toLocaleString() }}</span>
+                  <span class="price-label">Rp {{ (Number(item.harga) || 0).toLocaleString() }}</span>
                 </td>
                 <td>
-                  <div :class="['stock-display', { 'low-stock': item.stock < 10 }]">
-                    <span class="stock-num">{{ item.stock }}</span>
+                  <div :class="['stock-display', { 'low-stock': (item.stok || 0) < 10 }]">
+                    <span class="stock-num">{{ item.stok || 0 }}</span>
                     <span class="stock-unit">PCS</span>
                   </div>
                 </td>
@@ -88,12 +88,12 @@
           <form @submit.prevent="saveMerch" class="modal-form">
             <div class="form-group">
               <label>PRODUCT NAME</label>
-              <input type="text" v-model="form.name" required>
+              <input type="text" v-model="form.nama_produk" required placeholder="Nama Produk">
             </div>
             <div class="form-row">
               <div class="form-group">
                 <label>CATEGORY</label>
-                <select v-model="form.category">
+                <select v-model="form.kategori">
                   <option value="T-SHIRT">T-SHIRT</option>
                   <option value="KEYCHAIN">KEYCHAIN</option>
                   <option value="POSTER">POSTER</option>
@@ -102,12 +102,12 @@
               </div>
               <div class="form-group">
                 <label>PRICE (Rp)</label>
-                <input type="number" v-model="form.price" required>
+                <input type="number" v-model="form.harga" required placeholder="Harga">
               </div>
             </div>
             <div class="form-group">
               <label>STOCK QUANTITY</label>
-              <input type="number" v-model="form.stock" required>
+              <input type="number" v-model="form.stok" required placeholder="Stok">
             </div>
             <button type="submit" class="btn-save">SAVE PRODUCT</button>
           </form>
@@ -118,25 +118,38 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed, onMounted } from 'vue'
 
 const searchQuery = ref('')
 const categoryFilter = ref('all')
 const showModal = ref(false)
 const modalMode = ref('create')
 
-const merchItems = ref([
-    { id: 1, name: 'OFFICIAL VOL.3 BLACK TEE', category: 'T-SHIRT', price: 125000, image: '/minami.png', stock: 45, isNew: true },
-    { id: 2, name: 'MINAMI CHIBI KEYCHAIN', category: 'KEYCHAIN', price: 25000, image: '/CHIBI COSWALK.png', stock: 8, isNew: false },
-    { id: 3, name: 'LIMITED EDITION EVENT POSTER', category: 'POSTER', price: 35000, image: '/logo-aratu.png', stock: 120, isNew: true }
-])
+const { getAllMerch, addMerchItem, updateMerchItem, deleteMerchItem } = useMerch()
 
-const form = reactive({ id: null, name: '', category: 'T-SHIRT', price: 0, stock: 0 })
+const merchItems = ref([])
+const fetchMerch = async () => {
+    try {
+        const { data: res } = await getAllMerch()
+        if (res.value?.data) {
+            merchItems.value = res.value.data
+        }
+    } catch (error) {
+        console.error('Failed to fetch merchandise:', error)
+    }
+}
+
+onMounted(() => {
+    fetchMerch()
+})
+
+const form = reactive({ id: null, nama_produk: '', kategori: 'T-SHIRT', harga: 0, stok: 0 })
 
 const filteredMerch = computed(() => {
+    if (!merchItems.value) return []
     return merchItems.value.filter(item => {
-        const matchesSearch = item.name.toLowerCase().includes(searchQuery.value.toLowerCase())
-        const matchesCat = categoryFilter.value === 'all' || item.category === categoryFilter.value
+        const matchesSearch = (item.nama_produk || '').toLowerCase().includes(searchQuery.value.toLowerCase())
+        const matchesCat = categoryFilter.value === 'all' || item.kategori === categoryFilter.value
         return matchesSearch && matchesCat
     })
 })
@@ -148,19 +161,30 @@ const openModal = (mode, item = null) => {
     showModal.value = true
 }
 
-const saveMerch = () => {
-    if (modalMode.value === 'create') {
-        merchItems.value.push({ ...form, id: Date.now(), image: '/minami.png', isNew: true })
-    } else {
-        const idx = merchItems.value.findIndex(m => m.id === form.id)
-        if (idx !== -1) merchItems.value[idx] = { ...merchItems.value[idx], ...form }
+const saveMerch = async () => {
+    try {
+        if (modalMode.value === 'create') {
+            // Note: If the backend strictly requires FormData, this might need adjustment
+            // But for a simple CRUD, JSON is often accepted.
+            await addMerchItem(form) 
+        } else {
+            await updateMerchItem(form.id, form)
+        }
+        await fetchMerch()
+        showModal.value = false
+    } catch (error) {
+        alert('Failed to save product')
     }
-    showModal.value = false
 }
 
-const handleDelete = (id) => {
+const handleDelete = async (id) => {
     if (confirm('Delete this product?')) {
-        merchItems.value = merchItems.value.filter(m => m.id !== id)
+        try {
+            await deleteMerchItem(id)
+            await fetchMerch()
+        } catch (error) {
+            alert('Failed to delete product')
+        }
     }
 }
 </script>
