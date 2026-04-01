@@ -47,9 +47,6 @@
                   </div>
                 </td>
                 <td>
-                   <span class="date">{{ event.created_at ? new Date(event.created_at).toLocaleDateString() : '-' }}</span>
-                </td>
-                <td>
                   <div class="badge active">{{ (event.status || 'ACTIVE').toUpperCase() }}</div>
                 </td>
                 <td>
